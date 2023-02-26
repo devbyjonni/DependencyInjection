@@ -11,7 +11,7 @@ import SwiftUI
 struct DependencyInjectionApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(vm: DependencyProvider.viewModel)
         }
     }
 }

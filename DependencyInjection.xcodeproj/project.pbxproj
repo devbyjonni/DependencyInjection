@@ -11,6 +11,10 @@
 		FA1DD54729ABCD6400215BF1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1DD54629ABCD6400215BF1 /* ContentView.swift */; };
 		FA1DD54929ABCD6600215BF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA1DD54829ABCD6600215BF1 /* Assets.xcassets */; };
 		FA1DD54C29ABCD6600215BF1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA1DD54B29ABCD6600215BF1 /* Preview Assets.xcassets */; };
+		FA1DD55329ABCD9B00215BF1 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1DD55229ABCD9B00215BF1 /* Service.swift */; };
+		FA1DD55529ABCE3600215BF1 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1DD55429ABCE3600215BF1 /* ContentViewModel.swift */; };
+		FA1DD55729ABD32E00215BF1 /* DependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1DD55629ABD32E00215BF1 /* DependencyProvider.swift */; };
+		FA1DD55929ABFE3000215BF1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1DD55829ABFE3000215BF1 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +23,10 @@
 		FA1DD54629ABCD6400215BF1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FA1DD54829ABCD6600215BF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA1DD54B29ABCD6600215BF1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FA1DD55229ABCD9B00215BF1 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		FA1DD55429ABCE3600215BF1 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		FA1DD55629ABD32E00215BF1 /* DependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyProvider.swift; sourceTree = "<group>"; };
+		FA1DD55829ABFE3000215BF1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +60,11 @@
 			isa = PBXGroup;
 			children = (
 				FA1DD54429ABCD6400215BF1 /* DependencyInjectionApp.swift */,
+				FA1DD55629ABD32E00215BF1 /* DependencyProvider.swift */,
 				FA1DD54629ABCD6400215BF1 /* ContentView.swift */,
+				FA1DD55429ABCE3600215BF1 /* ContentViewModel.swift */,
+				FA1DD55229ABCD9B00215BF1 /* Service.swift */,
+				FA1DD55829ABFE3000215BF1 /* User.swift */,
 				FA1DD54829ABCD6600215BF1 /* Assets.xcassets */,
 				FA1DD54A29ABCD6600215BF1 /* Preview Content */,
 			);
@@ -137,8 +149,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA1DD55729ABD32E00215BF1 /* DependencyProvider.swift in Sources */,
+				FA1DD55529ABCE3600215BF1 /* ContentViewModel.swift in Sources */,
+				FA1DD55929ABFE3000215BF1 /* User.swift in Sources */,
 				FA1DD54729ABCD6400215BF1 /* ContentView.swift in Sources */,
 				FA1DD54529ABCD6400215BF1 /* DependencyInjectionApp.swift in Sources */,
+				FA1DD55329ABCD9B00215BF1 /* Service.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

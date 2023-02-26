@@ -8,19 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var vm: ContentViewModel
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationStack {
+            List {
+                ForEach(vm.users) { user in
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("\(user.name)")
+                            .font(.headline)
+                        Text("\(user.email)")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(.vertical)
+                }
+            }
+            .listStyle(.plain)
+            .navigationTitle("Dependency Injection")
         }
-        .padding()
+        .task {
+           await vm.fetchDataWithAsync()
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(vm: ContentViewModel(service: Service()))
     }
 }
