@@ -8,12 +8,6 @@
 import Foundation
 import Combine
 
-//protocol Servicing {
-//    func getData(url: URL, completionHandler: @escaping (Result<[User], APIError>) -> Void)
-//    func getData(url: URL) async throws -> [User]
-//    func getData(url: URL) -> AnyPublisher<[User], Error>
-//}
-
 enum APIError: Error, LocalizedError {
     case invalidURL
     case invalidResponseStatus
@@ -37,7 +31,15 @@ enum APIError: Error, LocalizedError {
     }
 }
 
-class Service {
+protocol Servicing {
+    associatedtype T
+    func getData<T: Decodable>(url: URL, completionHandler: @escaping (Result<T, APIError>) -> Void)
+    func getData<T: Decodable>(url: URL) async throws -> T
+    func getData<T: Decodable>(url: URL) -> AnyPublisher<T, Error>
+}
+
+class Service: Servicing {
+    typealias T = Decodable
     
     func getData<T: Decodable>(url: URL, completionHandler: @escaping (Result<T, APIError>) -> Void) {
         URLSession.shared.dataTask(with: url) { data, response, error in

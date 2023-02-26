@@ -9,15 +9,15 @@ import Foundation
 import Combine
 
 class ContentViewModel: ObservableObject {
-    private let service: Service
+    private let service: any Servicing
     private var cancellaables = Set<AnyCancellable>()
     
     @Published var users: [User] = []
     
-    init(service: Service) {
+    init(service: some Servicing) {
         self.service = service
-        // fetchDataWithCompletion()
-        // fetchDataCombine()
+        fetchDataWithCompletion()
+        fetchDataCombine()
     }
     
     private func fetchDataWithCompletion() {
