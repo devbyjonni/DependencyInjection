@@ -16,11 +16,11 @@ class ContentViewModel: ObservableObject {
     
     init(service: some Servicing) {
         self.service = service
-        // fetchDataWithCompletion()
-        fetchDataCombine()
+        // fetchJSONWithCompletionHandler()
+        fetchJSONWithCombine()
     }
     
-    private func fetchDataWithCompletion() {
+    private func fetchJSONWithCompletionHandler() {
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
         service.getData(url: url) { (result: Result<[User], APIError>) in
             switch result {
@@ -34,7 +34,7 @@ class ContentViewModel: ObservableObject {
         }
     }
     
-    private func fetchDataCombine() {
+    private func fetchJSONWithCombine() {
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
         
         service.getData(url: url)
@@ -53,7 +53,7 @@ class ContentViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchDataWithAsync() async {
+    func fetchJSONWithAsyncAwait() async {
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
         do {
             self.users = try await service.getData(url: url)

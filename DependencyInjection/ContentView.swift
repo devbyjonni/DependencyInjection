@@ -25,10 +25,10 @@ struct ContentView: View {
                 }
             }
             .listStyle(.plain)
-            .navigationTitle("Dependency Injection")
+            .navigationTitle("Dependency ")
         }
         .task {
-          //await vm.fetchDataWithAsync()
+            //await vm.fetchJSONWithAsyncAwait()
         }
     }
 }
@@ -38,3 +38,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(vm: ContentViewModel(service: Service()))
     }
 }
+

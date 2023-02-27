@@ -140,6 +140,7 @@ class MockService: Servicing {
     
     private func getBudleUrl(url: Optional<URL>.Publisher.Output) throws -> Data {
         do {
+            
             return try Data(contentsOf: url)
         } catch {
             throw error
