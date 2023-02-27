@@ -15,6 +15,7 @@
 		FA1DD55529ABCE3600215BF1 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1DD55429ABCE3600215BF1 /* ContentViewModel.swift */; };
 		FA1DD55729ABD32E00215BF1 /* DependencyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1DD55629ABD32E00215BF1 /* DependencyProvider.swift */; };
 		FA1DD55929ABFE3000215BF1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1DD55829ABFE3000215BF1 /* User.swift */; };
+		FA1DD55B29AC1BB600215BF1 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = FA1DD55A29AC1BB600215BF1 /* users.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		FA1DD55429ABCE3600215BF1 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		FA1DD55629ABD32E00215BF1 /* DependencyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyProvider.swift; sourceTree = "<group>"; };
 		FA1DD55829ABFE3000215BF1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		FA1DD55A29AC1BB600215BF1 /* users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 		FA1DD54A29ABCD6600215BF1 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				FA1DD55A29AC1BB600215BF1 /* users.json */,
 				FA1DD54B29ABCD6600215BF1 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -137,6 +140,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA1DD55B29AC1BB600215BF1 /* users.json in Resources */,
 				FA1DD54C29ABCD6600215BF1 /* Preview Assets.xcassets in Resources */,
 				FA1DD54929ABCD6600215BF1 /* Assets.xcassets in Resources */,
 			);

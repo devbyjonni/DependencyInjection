@@ -28,7 +28,7 @@ struct ContentView: View {
             .navigationTitle("Dependency Injection")
         }
         .task {
-           await vm.fetchDataWithAsync()
+          //await vm.fetchDataWithAsync()
         }
     }
 }

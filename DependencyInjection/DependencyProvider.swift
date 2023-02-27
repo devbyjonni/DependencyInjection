@@ -8,8 +8,8 @@
 import Foundation
 
 struct DependencyProvider {
-    static var service:  Service {
-        return Service()
+    static var service:  any Servicing {
+        return MockService()
     }
 
     static var viewModel: ContentViewModel {

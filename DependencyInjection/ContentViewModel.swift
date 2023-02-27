@@ -16,7 +16,7 @@ class ContentViewModel: ObservableObject {
     
     init(service: some Servicing) {
         self.service = service
-        fetchDataWithCompletion()
+        // fetchDataWithCompletion()
         fetchDataCombine()
     }
     

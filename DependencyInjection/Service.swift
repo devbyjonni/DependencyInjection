@@ -104,3 +104,53 @@ class Service: Servicing {
             .eraseToAnyPublisher()
     }
 }
+
+
+class MockService: Servicing {
+    typealias T = Decodable
+    
+    func getData<T: Decodable>(url: URL, completionHandler: @escaping (Result<T, APIError>) -> Void) {
+        do {
+            let data = try Data(contentsOf: getBudleUrl())
+            let decodedData = try JSONDecoder().decode(T.self, from: data)
+            completionHandler(.success(decodedData))
+        } catch {
+            completionHandler(.failure(.decodingError(error.localizedDescription)))
+        }
+    }
+    
+    func getData<T: Decodable>(url: URL) async throws -> T {
+        do {
+            let data = try Data(contentsOf: getBudleUrl())
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            throw APIError.decodingError(error.localizedDescription)
+        }
+    }
+    
+    func getData<T: Decodable>(url: URL) -> AnyPublisher<T, Error> {
+        Bundle.main.url(forResource: "users", withExtension: "json")
+            .publisher
+            .tryMap{ try Data(contentsOf: $0)}
+            .mapError({ $0 })
+            .decode(type: T.self, decoder: JSONDecoder())
+            .mapError({ $0 })
+            .eraseToAnyPublisher()
+    }
+    
+    private func getBudleUrl(url: Optional<URL>.Publisher.Output) throws -> Data {
+        do {
+            return try Data(contentsOf: url)
+        } catch {
+            throw error
+        }
+    }
+    
+    private func getBudleUrl() throws -> URL {
+        let file = "users"
+        guard let url = Bundle.main.url(forResource: file, withExtension: "json") else {
+            fatalError("Failed to locate \(file) in bundle.")
+        }
+        return url
+    }
+}
