@@ -34,10 +34,12 @@ class ContentViewModel: ObservableObject {
         }
     }
     
+
+    
     private func fetchJSONWithCombine() {
-        guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
-        
-        service.getData(url: url)
+       // guard let url = URL(string: "https://jsonplaceholder.typicode.com/users") else { return }
+       let url = MockService.getBundleURL(for: "users")
+        service.getData(from: url)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {

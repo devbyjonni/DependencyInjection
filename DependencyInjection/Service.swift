@@ -9,18 +9,19 @@ import Foundation
 import Combine
 
 enum APIError: Error, LocalizedError {
-    case invalidURL
-    case invalidResponseStatus
     case dataTaskError(String)
     case corruptData
     case decodingError(String)
+    case invalidURL
+       case invalidResponseStatus(Int)
+ 
     
     var errorDescription: String? {
         switch self {
         case .invalidURL:
             return NSLocalizedString("The endpoint URL is invalid", comment: "")
         case .invalidResponseStatus:
-            return NSLocalizedString("The APIO failed to issue a valid response.", comment: "")
+            return NSLocalizedString("The API failed to issue a valid response.", comment: "")
         case .dataTaskError(let string):
             return string
         case .corruptData:
@@ -35,7 +36,7 @@ protocol Servicing {
     associatedtype T
     func getData<T: Decodable>(url: URL, completionHandler: @escaping (Result<T, APIError>) -> Void)
     func getData<T: Decodable>(url: URL) async throws -> T
-    func getData<T: Decodable>(url: URL) -> AnyPublisher<T, Error>
+    func getData<T: Decodable>(from url: URL) -> AnyPublisher<T, Error>
 }
 
 class Service: Servicing {
@@ -46,7 +47,7 @@ class Service: Servicing {
             guard let httpResponse = response as? HTTPURLResponse,
                   httpResponse.statusCode >= 200 && httpResponse.statusCode < 300
             else {
-                completionHandler(.failure(.invalidResponseStatus))
+                completionHandler(.failure(.invalidResponseStatus((response as? HTTPURLResponse)?.statusCode ?? 0)))
                 return
             }
             
@@ -75,9 +76,10 @@ class Service: Servicing {
             let (data, response) = try await  URLSession.shared.data(from: url)
             
             guard let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode >= 200 && httpResponse.statusCode < 300
-            else { throw APIError.invalidResponseStatus }
-            
+                  (200..<300).contains(httpResponse.statusCode)
+            else {
+                throw APIError.invalidResponseStatus((response as? HTTPURLResponse)?.statusCode ?? 0)
+            }
             do {
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
                 return decodedData
@@ -90,19 +92,23 @@ class Service: Servicing {
         }
     }
     
-    func getData<T: Decodable>(url: URL) -> AnyPublisher<T, Error> {
+    func getData<T: Decodable>(from url: URL) -> AnyPublisher<T, Error> {
         URLSession.shared.dataTaskPublisher(for: url)
-            .tryMap { output in
-                guard let httpResponse = output.response as? HTTPURLResponse,
-                      httpResponse.statusCode >= 200 && httpResponse.statusCode < 300
-                else {
-                    throw APIError.invalidResponseStatus
-                }
-                return output.data
-            }
+            .tryMap { try self.validateResponse($0) }
             .decode(type: T.self, decoder: JSONDecoder())
+            .mapError { APIError.decodingError($0.localizedDescription) }
             .eraseToAnyPublisher()
     }
+    
+    func validateResponse(_ output: URLSession.DataTaskPublisher.Output) throws -> Data {
+        guard let httpResponse = output.response as? HTTPURLResponse,
+              (200..<300).contains(httpResponse.statusCode)
+        else {
+            throw APIError.invalidResponseStatus((output.response as? HTTPURLResponse)?.statusCode ?? 0)
+        }
+        return output.data
+    }
+
 }
 
 
@@ -128,24 +134,22 @@ class MockService: Servicing {
         }
     }
     
-    func getData<T: Decodable>(url: URL) -> AnyPublisher<T, Error> {
-        Bundle.main.url(forResource: "users", withExtension: "json")
-            .publisher
-            .tryMap{ try Data(contentsOf: $0)}
-            .mapError({ $0 })
+    func getData<T: Decodable>(from url: URL) -> AnyPublisher<T, Error> {
+        URLSession.shared.dataTaskPublisher(for: url)
+            .map({ $0.data })
             .decode(type: T.self, decoder: JSONDecoder())
-            .mapError({ $0 })
             .eraseToAnyPublisher()
     }
     
-    private func getBudleUrl(url: Optional<URL>.Publisher.Output) throws -> Data {
-        do {
-            
-            return try Data(contentsOf: url)
-        } catch {
-            throw error
+    static func getBundleURL(for file: String) -> URL {
+        guard let url = Bundle.main.url(forResource: file, withExtension: "json") else {
+            fatalError("Failed to locate \(file) in bundle.")
         }
+        return url
     }
+    
+    
+
     
     private func getBudleUrl() throws -> URL {
         let file = "users"
